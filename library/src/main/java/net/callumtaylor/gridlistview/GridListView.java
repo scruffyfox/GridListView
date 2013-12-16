@@ -56,9 +56,14 @@ public class GridListView extends ListView
 			this.context = context;
 		}
 
+		private int getBaseCount()
+		{
+			return baseAdapter.getCount();
+		}
+
 		@Override public int getCount()
 		{
-			return (int)Math.floor(baseAdapter.getCount() / (float)columnCount);
+			return (int)Math.ceil(baseAdapter.getCount() / (float)columnCount);
 		}
 
 		@Override public Object getItem(int position)
@@ -82,10 +87,13 @@ public class GridListView extends ListView
 
 			for (int index = 0; index < columnCount; index++)
 			{
+				if ((position * columnCount) + index >= getBaseCount()) break;
+
 				View v = baseAdapter.getView((position * columnCount) + index, ((LinearLayout)convertView).getChildAt(index), (LinearLayout)convertView);
 				((LinearLayout.LayoutParams)v.getLayoutParams()).width = 0;
 				((LinearLayout.LayoutParams)v.getLayoutParams()).weight = 1;
 
+				((LinearLayout)convertView).removeView(v);
 				((LinearLayout)convertView).addView(v);
 			}
 
