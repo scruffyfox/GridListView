@@ -91,19 +91,24 @@ public class GridListView extends ListView
 			}
 
 			((LinearLayout)convertView).setWeightSum(columnCount);
-
 			View[] convertViews = new View[columnCount];
 
 			for (int index = 0; index < columnCount; index++)
 			{
 				if ((position * columnCount) + index >= getBaseCount()) break;
 
-				View v = baseAdapter.getView((position * columnCount) + index, ((LinearLayout)convertView).getChildAt(index), (LinearLayout)convertView);
-				((LinearLayout.LayoutParams)v.getLayoutParams()).width = 0;
-				((LinearLayout.LayoutParams)v.getLayoutParams()).weight = 1;
-				v.setBackgroundResource(android.R.drawable.list_selector_background);
+				GridCellWrapper wrapper;
 
-				convertViews[index] = v;
+				if ((wrapper = (GridCellWrapper)((LinearLayout)convertView).getChildAt(index)) == null)
+				{
+					wrapper = new GridCellWrapper(context);
+				}
+
+				View v = baseAdapter.getView((position * columnCount) + index, wrapper.getChildAt(0), wrapper);
+				wrapper.removeAllViews();
+				wrapper.addView(v);
+
+				convertViews[index] = wrapper;
 			}
 
 			((LinearLayout)convertView).removeAllViews();
