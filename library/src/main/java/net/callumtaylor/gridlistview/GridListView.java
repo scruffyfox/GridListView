@@ -33,7 +33,7 @@ public class GridListView extends ListView
 		super(context, attrs, defStyle);
 
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.GridListView);
-		mNumColumns = attributes.getInt(R.styleable.GridListView_column_count, 1);
+		mNumColumns = attributes.getInt(R.styleable.GridListView_numColumns, 1);
 		attributes.recycle();
 	}
 
