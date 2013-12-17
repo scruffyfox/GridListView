@@ -31,6 +31,7 @@ public class GridListView extends ListView
 
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.GridListView);
 		columnCount = attributes.getInt(R.styleable.GridListView_column_count, 1);
+		attributes.recycle();
 	}
 
 	@Override public void setAdapter(ListAdapter adapter)
