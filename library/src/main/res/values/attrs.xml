@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<declare-styleable name="GridListView">
-		<attr name="column_count" format="integer"/>
+		<attr name="numColumns" format="integer"/>
 	</declare-styleable>
 </resources>

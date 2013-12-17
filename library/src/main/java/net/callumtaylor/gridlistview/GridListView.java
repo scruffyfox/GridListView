@@ -13,7 +13,8 @@ import android.widget.ListView;
 
 public class GridListView extends ListView
 {
-	private int columnCount = 1;
+	private int mNumColumns = 1;
+
 	private OnItemClickListener clickListener;
 
 	public GridListView(Context context)
@@ -31,13 +32,13 @@ public class GridListView extends ListView
 		super(context, attrs, defStyle);
 
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.GridListView);
-		columnCount = attributes.getInt(R.styleable.GridListView_column_count, 1);
+		mNumColumns = attributes.getInt(R.styleable.GridListView_column_count, 1);
 		attributes.recycle();
 	}
 
-	public void setColumnCount(int columnCount)
+	public void setNumColumns(int columnCount)
 	{
-		this.columnCount = columnCount;
+		this.mNumColumns = columnCount;
 
 		if (getAdapter() != null)
 		{
@@ -45,9 +46,9 @@ public class GridListView extends ListView
 		}
 	}
 
-	public int getColumnCount()
+	public int getNumColumns()
 	{
-		return this.columnCount;
+		return this.mNumColumns;
 	}
 
 	@Override public void setAdapter(ListAdapter adapter)
@@ -85,12 +86,12 @@ public class GridListView extends ListView
 
 		@Override public int getCount()
 		{
-			return (int)Math.ceil(baseAdapter.getCount() / (float)columnCount);
+			return (int)Math.ceil(baseAdapter.getCount() / (float)mNumColumns);
 		}
 
 		@Override public Object getItem(int position)
 		{
-			return baseAdapter.getItem(position * columnCount);
+			return baseAdapter.getItem(position * mNumColumns);
 		}
 
 		@Override public long getItemId(int position)
@@ -105,12 +106,12 @@ public class GridListView extends ListView
 				convertView = LayoutInflater.from(context).inflate(R.layout.row, parent, false);
 			}
 
-			((LinearLayout)convertView).setWeightSum(columnCount);
-			View[] convertViews = new View[columnCount];
+			((LinearLayout)convertView).setWeightSum(mNumColumns);
+			View[] convertViews = new View[mNumColumns];
 
-			for (int index = 0; index < columnCount; index++)
+			for (int index = 0; index < mNumColumns; index++)
 			{
-				if ((position * columnCount) + index >= getBaseCount()) break;
+				if ((position * mNumColumns) + index >= getBaseCount()) break;
 
 				GridCellWrapper wrapper;
 
@@ -119,7 +120,7 @@ public class GridListView extends ListView
 					wrapper = new GridCellWrapper(context);
 				}
 
-				View v = baseAdapter.getView((position * columnCount) + index, wrapper.getChildAt(0), wrapper);
+				View v = baseAdapter.getView((position * mNumColumns) + index, wrapper.getChildAt(0), wrapper);
 				wrapper.removeAllViews();
 				wrapper.addView(v);
 
@@ -128,13 +129,13 @@ public class GridListView extends ListView
 
 			((LinearLayout)convertView).removeAllViews();
 
-			for (int index = 0; index < columnCount; index++)
+			for (int index = 0; index < mNumColumns; index++)
 			{
 				if (convertViews[index] == null) break;
 
-				if (baseAdapter.isEnabled((position * columnCount) + index))
+				if (baseAdapter.isEnabled((position * mNumColumns) + index))
 				{
-					final int pos = (position * columnCount) + index;
+					final int pos = (position * mNumColumns) + index;
 					convertViews[index].setOnClickListener(new OnClickListener()
 					{
 						@Override public void onClick(View v)
