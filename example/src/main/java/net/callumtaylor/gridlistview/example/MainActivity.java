@@ -16,7 +16,8 @@ public class MainActivity extends Activity
 
 		GridListView list = (GridListView)findViewById(R.id.list_view);
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.column, new String[]{
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.column, android.R.id.text1, new String[]
+		{
 			"1",
 			"2",
 			"3",
