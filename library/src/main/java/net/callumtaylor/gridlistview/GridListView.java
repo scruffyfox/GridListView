@@ -2,6 +2,7 @@ package net.callumtaylor.gridlistview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,6 +98,63 @@ public class GridListView extends ListView
 		@Override public long getItemId(int position)
 		{
 			return baseAdapter.getItemId(position);
+		}
+
+		@Override public boolean hasStableIds()
+		{
+			return baseAdapter.hasStableIds();
+		}
+
+		@Override public void registerDataSetObserver(DataSetObserver observer)
+		{
+			baseAdapter.registerDataSetObserver(observer);
+		}
+
+		@Override public void unregisterDataSetObserver(DataSetObserver observer)
+		{
+			baseAdapter.unregisterDataSetObserver(observer);
+		}
+
+		@Override public void notifyDataSetChanged()
+		{
+			super.notifyDataSetChanged();
+			baseAdapter.notifyDataSetChanged();
+		}
+
+		@Override public void notifyDataSetInvalidated()
+		{
+			super.notifyDataSetInvalidated();
+			baseAdapter.notifyDataSetInvalidated();
+		}
+
+		@Override public boolean areAllItemsEnabled()
+		{
+			return baseAdapter.areAllItemsEnabled();
+		}
+
+		@Override public boolean isEnabled(int position)
+		{
+			return baseAdapter.isEnabled(position);
+		}
+
+		@Override public View getDropDownView(int position, View convertView, ViewGroup parent)
+		{
+			return baseAdapter.getDropDownView(position, convertView, parent);
+		}
+
+		@Override public int getItemViewType(int position)
+		{
+			return baseAdapter.getItemViewType(position);
+		}
+
+		@Override public int getViewTypeCount()
+		{
+			return baseAdapter.getViewTypeCount();
+		}
+
+		@Override public boolean isEmpty()
+		{
+			return baseAdapter.isEmpty();
 		}
 
 		@Override public View getView(int position, View convertView, ViewGroup parent)
