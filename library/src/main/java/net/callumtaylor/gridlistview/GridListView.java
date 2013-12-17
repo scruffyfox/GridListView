@@ -207,7 +207,7 @@ public class GridListView extends ListView
 
 			for (int index = 0; index < columnCount; index++)
 			{
-				if ((previousItems) + index >= getBaseCount()) break;
+				if (previousItems + index >= getBaseCount()) break;
 
 				GridCellWrapper wrapper;
 				if ((wrapper = (GridCellWrapper)((LinearLayout)convertView).getChildAt(index)) == null)
@@ -215,7 +215,7 @@ public class GridListView extends ListView
 					wrapper = new GridCellWrapper(context);
 				}
 
-				View v = baseAdapter.getView((previousItems) + index, wrapper.getChildAt(0), wrapper);
+				View v = baseAdapter.getView(previousItems + index, wrapper.getChildAt(0), wrapper);
 				wrapper.removeAllViews();
 				wrapper.addView(v);
 
@@ -228,7 +228,7 @@ public class GridListView extends ListView
 			{
 				if (convertViews[index] == null) break;
 
-				if (baseAdapter.isEnabled((previousItems) + index))
+				if (baseAdapter.isEnabled(previousItems + index))
 				{
 					final int pos = (position * columnCount) + index;
 					convertViews[index].setOnClickListener(new OnClickListener()

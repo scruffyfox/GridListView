@@ -66,6 +66,10 @@ public class MainActivity extends Activity
 				{
 					return 1;
 				}
+				else if (rowIndex % 3 == 0)
+				{
+					return 2;
+				}
 
 				return super.getColumnCount(rowIndex);
 			}
