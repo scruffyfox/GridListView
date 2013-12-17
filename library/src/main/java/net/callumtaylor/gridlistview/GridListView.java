@@ -85,6 +85,8 @@ public class GridListView extends ListView
 
 			((LinearLayout)convertView).setWeightSum(columnCount);
 
+			View[] convertViews = new View[columnCount];
+
 			for (int index = 0; index < columnCount; index++)
 			{
 				if ((position * columnCount) + index >= getBaseCount()) break;
@@ -92,9 +94,16 @@ public class GridListView extends ListView
 				View v = baseAdapter.getView((position * columnCount) + index, ((LinearLayout)convertView).getChildAt(index), (LinearLayout)convertView);
 				((LinearLayout.LayoutParams)v.getLayoutParams()).width = 0;
 				((LinearLayout.LayoutParams)v.getLayoutParams()).weight = 1;
+				convertViews[index] = v;
+			}
 
-				((LinearLayout)convertView).removeView(v);
-				((LinearLayout)convertView).addView(v);
+			((LinearLayout)convertView).removeAllViews();
+
+			for (int index = 0; index < columnCount; index++)
+			{
+				if (convertViews[index] == null) break;
+
+				((LinearLayout)convertView).addView(convertViews[index], index);
 			}
 
 			return convertView;
