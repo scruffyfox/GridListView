@@ -35,6 +35,21 @@ public class GridListView extends ListView
 		attributes.recycle();
 	}
 
+	public void setColumnCount(int columnCount)
+	{
+		this.columnCount = columnCount;
+
+		if (getAdapter() != null)
+		{
+			((InternalAdapterImpl)getAdapter()).notifyDataSetChanged();
+		}
+	}
+
+	public int getColumnCount()
+	{
+		return this.columnCount;
+	}
+
 	@Override public void setAdapter(ListAdapter adapter)
 	{
 		if (!(adapter instanceof BaseAdapter))
