@@ -14,6 +14,7 @@ import android.widget.ListView;
 public class GridListView extends ListView
 {
 	private int columnCount = 1;
+	private OnItemClickListener clickListener;
 
 	public GridListView(Context context)
 	{
@@ -44,6 +45,11 @@ public class GridListView extends ListView
 
 		InternalAdapterImpl wrapper = new InternalAdapterImpl(getContext(), (BaseAdapter)adapter);
 		super.setAdapter(wrapper);
+	}
+
+	@Override public void setOnItemClickListener(OnItemClickListener listener)
+	{
+		this.clickListener = listener;
 	}
 
 	private class InternalAdapterImpl extends BaseAdapter
@@ -95,6 +101,8 @@ public class GridListView extends ListView
 				View v = baseAdapter.getView((position * columnCount) + index, ((LinearLayout)convertView).getChildAt(index), (LinearLayout)convertView);
 				((LinearLayout.LayoutParams)v.getLayoutParams()).width = 0;
 				((LinearLayout.LayoutParams)v.getLayoutParams()).weight = 1;
+				v.setBackgroundResource(android.R.drawable.list_selector_background);
+
 				convertViews[index] = v;
 			}
 
@@ -103,6 +111,21 @@ public class GridListView extends ListView
 			for (int index = 0; index < columnCount; index++)
 			{
 				if (convertViews[index] == null) break;
+
+				if (baseAdapter.isEnabled((position * columnCount) + index))
+				{
+					final int pos = (position * columnCount) + index;
+					convertViews[index].setOnClickListener(new OnClickListener()
+					{
+						@Override public void onClick(View v)
+						{
+							if (clickListener != null)
+							{
+								clickListener.onItemClick(GridListView.this, v, pos, baseAdapter.getItemId(pos));
+							}
+						}
+					});
+				}
 
 				((LinearLayout)convertView).addView(convertViews[index], index);
 			}
