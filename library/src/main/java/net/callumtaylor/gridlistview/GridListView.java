@@ -109,7 +109,7 @@ public class GridListView extends ListView
 
 		@Override public int getCount()
 		{
-			return columnSpec.length;
+			return columnSpec == null ? (int)Math.ceil(baseAdapter.getCount() / getNumColumns()) : columnSpec.length;
 		}
 
 		@Override public Object getItem(int position)
