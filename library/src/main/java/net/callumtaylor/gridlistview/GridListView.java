@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class GridListView extends ListView
 {
-	private int mNumColumns = 1;
+	private int mNumColumns = 0;
 
 	private OnItemClickListener clickListener;
 
@@ -200,6 +200,10 @@ public class GridListView extends ListView
 				{
 					previousItems += columnSpec[index];
 				}
+			}
+			else
+			{
+				previousItems += mNumColumns * position;
 			}
 
 			((LinearLayout)convertView).setWeightSum(columnCount);
