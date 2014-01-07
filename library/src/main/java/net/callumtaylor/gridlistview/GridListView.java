@@ -3,6 +3,7 @@ package net.callumtaylor.gridlistview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -217,6 +218,7 @@ public class GridListView extends ListView
 				if ((wrapper = (GridCellWrapper)((LinearLayout)convertView).getChildAt(index)) == null)
 				{
 					wrapper = new GridCellWrapper(context);
+					wrapper.setBackgroundDrawable(GridListView.this.getSelector());
 				}
 
 				View v = baseAdapter.getView(previousItems + index, wrapper.getChildAt(0), wrapper);

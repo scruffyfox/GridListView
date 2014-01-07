@@ -1,7 +1,10 @@
 package net.callumtaylor.gridlistview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
@@ -11,23 +14,22 @@ class GridCellWrapper extends FrameLayout
 	{
 		super(context);
 
-		setBackgroundResource(android.R.drawable.list_selector_background);
+		init();
+	}
 
+	private void init()
+	{
 		setLayoutParams(new LinearLayout.LayoutParams(0, -1));
 		((LinearLayout.LayoutParams)getLayoutParams()).weight = 1;
 	}
 
-	public GridCellWrapper(Context context, AttributeSet attrs)
+	@Override public void addView(View child, int index, ViewGroup.LayoutParams params)
 	{
-		super(context, attrs);
+		if (child.getBackground() != null)
+		{
+			setBackground(null);
+		}
 
-		setBackgroundResource(android.R.drawable.list_selector_background);
-	}
-
-	public GridCellWrapper(Context context, AttributeSet attrs, int defStyle)
-	{
-		super(context, attrs, defStyle);
-
-		setBackgroundResource(android.R.drawable.list_selector_background);
+		super.addView(child, index, params);
 	}
 }
