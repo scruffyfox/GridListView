@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.HeaderViewListAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ public class GridListView extends ListView
 	private int mNumColumns = 0;
 
 	private OnItemClickListener clickListener;
+	private OnItemLongClickListener longClickListener;
 
 	public GridListView(Context context)
 	{
@@ -68,9 +70,42 @@ public class GridListView extends ListView
 		super.setAdapter(wrapper);
 	}
 
+	@Override public ListAdapter getAdapter()
+	{
+		ListAdapter adapter = super.getAdapter();
+
+		if (adapter instanceof HeaderViewListAdapter)
+		{
+			adapter = (InternalAdapterImpl)((HeaderViewListAdapter)adapter).getWrappedAdapter();
+		}
+
+		if (adapter != null)
+		{
+			return ((InternalAdapterImpl)adapter).baseAdapter;
+		}
+
+		return null;
+	}
+
 	@Override public void setOnItemClickListener(OnItemClickListener listener)
 	{
 		this.clickListener = listener;
+	}
+
+	@Override public void setOnItemLongClickListener(OnItemLongClickListener listener)
+	{
+		this.longClickListener = listener;
+	}
+
+	@Override public boolean performItemClick(View view, int position, long id)
+	{
+		if (this.clickListener != null)
+		{
+			this.clickListener.onItemClick(this, view, position, id);
+			return true;
+		}
+
+		return false;
 	}
 
 	private class InternalAdapterImpl extends BaseAdapter
@@ -110,7 +145,7 @@ public class GridListView extends ListView
 
 		@Override public int getCount()
 		{
-			return columnSpec == null ? (int)Math.ceil(baseAdapter.getCount() / getNumColumns()) : columnSpec.length;
+			return columnSpec == null ? (int)Math.ceil((float)baseAdapter.getCount() / (float)getNumColumns()) : columnSpec.length;
 		}
 
 		@Override public Object getItem(int position)
@@ -247,6 +282,17 @@ public class GridListView extends ListView
 							}
 						}
 					});
+
+					if (longClickListener != null)
+					{
+						convertViews[index].setOnLongClickListener(new OnLongClickListener()
+						{
+							@Override public boolean onLongClick(View v)
+							{
+								return longClickListener.onItemLongClick(GridListView.this, v, pos, baseAdapter.getItemId(pos));
+							}
+						});
+					}
 				}
 
 				((LinearLayout)convertView).addView(convertViews[index], index);
