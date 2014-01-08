@@ -270,9 +270,9 @@ public class GridListView extends ListView
 			{
 				if (convertViews[index] == null) break;
 
-				if (baseAdapter.isEnabled(previousItems + index))
+				final int pos = previousItems + index;
+				if (baseAdapter.isEnabled(pos))
 				{
-					final int pos = (position * columnCount) + index;
 					convertViews[index].setOnClickListener(new OnClickListener()
 					{
 						@Override public void onClick(View v)
