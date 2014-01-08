@@ -1,8 +1,6 @@
 package net.callumtaylor.gridlistview;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -27,7 +25,7 @@ class GridCellWrapper extends FrameLayout
 	{
 		if (child.getBackground() != null)
 		{
-			setBackground(null);
+			setBackgroundDrawable(null);
 		}
 
 		super.addView(child, index, params);
