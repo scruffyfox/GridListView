@@ -3,7 +3,7 @@ package net.callumtaylor.gridlistview;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +40,8 @@ public class GridListView extends ListView
 		TypedArray attributes = context.obtainStyledAttributes(attrs, R.styleable.GridListView);
 		mNumColumns = attributes.getInt(R.styleable.GridListView_numColumns, 1);
 		attributes.recycle();
+
+		setSelector(new ColorDrawable(0x00000000));
 	}
 
 	public void setNumColumns(int columnCount)
@@ -253,7 +255,6 @@ public class GridListView extends ListView
 				if ((wrapper = (GridCellWrapper)((LinearLayout)convertView).getChildAt(index)) == null)
 				{
 					wrapper = new GridCellWrapper(context);
-					wrapper.setBackgroundDrawable(GridListView.this.getSelector());
 				}
 
 				View v = baseAdapter.getView(previousItems + index, wrapper.getChildAt(0), wrapper);
@@ -295,7 +296,7 @@ public class GridListView extends ListView
 					}
 				}
 
-				((LinearLayout)convertView).addView(convertViews[index], index);
+				((LinearLayout)convertView).addView(convertViews[index]);
 			}
 
 			return convertView;

@@ -19,6 +19,8 @@ class GridCellWrapper extends FrameLayout
 	{
 		setLayoutParams(new LinearLayout.LayoutParams(0, -1));
 		((LinearLayout.LayoutParams)getLayoutParams()).weight = 1;
+
+		setBackgroundResource(android.R.drawable.list_selector_background);
 	}
 
 	@Override public void addView(View child, int index, ViewGroup.LayoutParams params)
