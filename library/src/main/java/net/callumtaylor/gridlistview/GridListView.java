@@ -72,7 +72,13 @@ public class GridListView extends ListView
 		super.setAdapter(wrapper);
 	}
 
-	@Override public ListAdapter getAdapter()
+	/**
+	 * You must call this instead of {@link android.widget.ListView#getAdapter()} to get
+	 * your base adapter. Calling {@link android.widget.ListView#getAdapter()} will return the wrapper
+	 * adapter for the grid view.
+	 * @return
+	 */
+	public ListAdapter getBaseAdapter()
 	{
 		ListAdapter adapter = super.getAdapter();
 
