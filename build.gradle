@@ -33,8 +33,4 @@ android {
 	}
 }
 
-dependencies {
-	compile 'com.android.support:support-v4:19.0.+'
-}
-
 apply from: 'gradle/sonatype.gradle'
